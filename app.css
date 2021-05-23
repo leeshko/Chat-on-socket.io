@@ -1,0 +1,51 @@
+body {
+    background-color: rgb(50, 190, 245);
+    color: rgb(22, 24, 22);
+    font-family: 'Consolas', monospace;
+}
+
+header {
+    text-align: center;
+}
+
+#messages {
+    margin-left: 1em;
+    list-style: none;
+}
+
+#form {
+    display: flex;
+}
+
+input, label {
+    display: block;
+}
+
+input {
+    outline: none;
+    border: none;
+    background-color: rgb(23, 106, 139);
+    color: rgb(22, 24, 22);
+    padding: 1em .5em;
+    display: block;
+    font-size: 1.5em;
+    font-family: 'Consolas', monospace;
+    flex: 1;
+    position:absolute;
+    bottom: 0px;
+    width: 100%;
+}
+
+label {
+    display: block;
+    padding: 1em .5em;
+    font-size: 1.5em;
+}
+
+li {
+    border: 1px;
+    border-color: rgba(0, 0, 255, 0.5);
+    border-style: solid;
+    border-radius: 3px;
+    
+}
