@@ -1,27 +1,29 @@
-const status = document.getElementById('status');
-const messages = document.getElementById('messages');
-const form = document.getElementById('form');
-const input = document.getElementById('input');
+const express = require("express");
+const app = express();
 
-const ws = new WebSocket('ws://localhost:3000');
+app.set('view engine', 'ejs');
 
-const setStatus = (value) => {
-    status.innerHTML = value;
-}
+app.use(express.static("public"));
 
-const printMessage = (value) => {
-    const li = document.createElement('li');
-
-    li.innerHTML = value;
-    messages.appendChild(li);
-} 
-
-form.addEventListener('submit', event => {
-    event.preventDefault();
-    ws.send(input.value);
-    input.value = '';
+app.get('/', (req, res) => {
+	res.render('index')
 })
+server = app.listen("3000", () => console.log("Server is running..."));
 
-ws.onopen = () => setStatus('ONLINE');
-ws.onclose = () => setStatus('OFFLINE');
-ws.onmessage = (response) => printMessage(response.data);
+const io = require("socket.io")(server);
+
+io.on('connection', (socket) => {
+	socket.username = "Anonymous"
+
+    socket.on('change_username', (data) => {
+        socket.username = data.username
+    })
+
+    socket.on('new_message', (data) => {
+        io.sockets.emit('add_mess', {message : data.message, username : socket.username, className:data.className});
+    })
+
+    socket.on('typing', (data) => {
+    	socket.broadcast.emit('typing', {username : socket.username})
+    })
+})
